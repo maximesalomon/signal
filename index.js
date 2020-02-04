@@ -45,7 +45,19 @@ server.post("/api/signals", (req, res) => {
     db('signals')
     .insert({ /* TODO */ })
     .then(signal => {
-        res.send(`Signal ${signal.id} has been successfully processed!`);
+        res.send(`Signal ${signal.id} has been successfully saved!`);
+    })
+});
+
+// PUT signal by id
+server.post("/api/signals/:id", (req, res) => {
+    const { id } = req.params;
+
+    db('signals')
+    .where({ id })
+    .update({ /* TODO */ })
+    .then(signal => {
+        res.send(`Signal ${signal.id} has been successfully updated!`);
     })
 });
 
