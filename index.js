@@ -4,6 +4,10 @@ const db = require("../data/db.js");
 const server = express();
 const PORT = 7000;
 
+const knex = require('knex');
+const config = require('../knexfile.js');
+
+
 // API Homepage
 server.get("/", (req, res) => {
   res.send("Hello, world!");

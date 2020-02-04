@@ -1,11 +1,7 @@
 const knex = require('knex');
 
-const config = {
-  client: 'sqlite3',
-  connection: {
-    filename: './data/signals.db3',
-  },
-  useNullAsDefault: true,
-};
+const config = require('../knexfile');
 
-module.exports = knex(config);
+const db = knex(config.development);
+
+module.exports = db;
