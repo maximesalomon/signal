@@ -14,7 +14,7 @@ server.get("/api/signals", (req, res) => {
       res.json(signals);
     })
     .catch(err => {
-      res.status(500).json({ message: "Failed to get signals" });
+      res.status(500).json({ message: "Failed to get signals!" });
     });
 });
 
