@@ -42,23 +42,40 @@ server.get("api/signals/:id", (req, res) => {
 
 // POST signal
 server.post("/api/signals", (req, res) => {
-    db('signals')
-    .insert({ /* TODO */ })
-    .then(signal => {
-        res.send(`Signal ${signal.id} has been successfully saved!`);
+  db("signals")
+    .insert({
+      /* TODO */
     })
+    .then(signal => {
+      res.send(`Signal ${signal.id} has been successfully saved!`);
+    });
 });
 
 // PUT signal by id
 server.post("/api/signals/:id", (req, res) => {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    db('signals')
+  db("signals")
     .where({ id })
-    .update({ /* TODO */ })
-    .then(signal => {
-        res.send(`Signal ${signal.id} has been successfully updated!`);
+    .update({
+      /* TODO */
     })
+    .then(signal => {
+      res.send(`Signal ${signal.id} has been successfully updated!`);
+    });
+});
+
+// DELETE signal by id
+
+server.delete("/api/signals/:id", (req, res) => {
+  const { id } = req.params;
+
+  db("signals")
+    .where({ id })
+    .del()
+    .then(signal => {
+      res.send(`Signal ${signal.id} has been successfully deleted!`);
+    });
 });
 
 server.listen(PORT, () =>
