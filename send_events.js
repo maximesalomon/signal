@@ -171,23 +171,23 @@ const companies = [
   "drift.com",
   "figma.com",
   "zapier.com",
-  "hubspot.com"
+  "hubspot.com",
+  "mixpanel.com"
 ];
 
-sendEventDataToSegment(companies);
+const job = new CronJob(
+    // "23 7 * * *",
+    "*/7 * * * *",
+  () => {
+    console.log(
+      "CRON RUNNING --> Get Job Openings Signals from target companies"
+    );
+    sendEventDataToSegment(companies);
+    https.get("https://cronhub.io/ping/dc584860-4849-11ea-bafb-73b460406621");
+  },
+  null,
+  true,
+  "Europe/Paris"
+);
 
-// const job = new CronJob(
-//     "23 7 * * *",
-//   () => {
-//     console.log(
-//       "CRON RUNNING --> Get Job Openings Signals from target companies"
-//     );
-//     sendEventDataToSegment(companies);
-//     https.get("https://cronhub.io/ping/dc584860-4849-11ea-bafb-73b460406621");
-//   },
-//   null,
-//   true,
-//   "Europe/Paris"
-// );
-
-// job.start();
+job.start();
