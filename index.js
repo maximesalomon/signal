@@ -1,11 +1,11 @@
 const express = require("express");
 const db = require("./data/db");
+const bodyParser = require('body-parser')
 
 const server = express();
 const PORT = 7000;
 
-const knex = require("knex");
-const config = require("./knexfile.js");
+server.use(bodyParser.json());
 
 // API Homepage
 server
@@ -27,7 +27,6 @@ server.get("/api/signals", (req, res) => {
 // GET signal by id
 server.get("api/signals/:id", (req, res) => {
   const { id } = req.params;
-
   db("signals")
     .where({ id })
     .then(signal => {
@@ -46,6 +45,7 @@ server.get("api/signals/:id", (req, res) => {
 
 // POST signal
 server.post("/api/signals", (req, res) => {
+  console.log(req.body)
   db("signals")
     .insert({
       uuid: req.body.uuid,
@@ -56,7 +56,7 @@ server.post("/api/signals", (req, res) => {
       first_seen_at: req.body.first_seen_at,
       last_seen_at: req.body.last_seen_at,
       last_processed_at: req.body.last_processed_at,
-      job_opening_closed: req.body.job_opening_closed
+      job_opening_closed: req.body.job_opening_closed,
     })
     .then(signal => {
       res.send(`Signal ${signal.title} has been successfully saved!`);
