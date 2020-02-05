@@ -1,10 +1,12 @@
 const express = require("express");
 const db = require("./data/db");
+const bodyParser = require('body-parser');
 
 const server = express();
 const PORT = 7000;
 
-server.use(express.json());
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: true }));
 
 // API Homepage
 server
@@ -44,6 +46,7 @@ server.get("/api/signals/:id", (req, res) => {
 
 // POST signal
 server.post("/api/signals", (req, res) => {
+  console.log(req.body)
   db("signals")
     .insert({
       uuid: req.body.uuid,
@@ -67,11 +70,10 @@ server.post("/api/signals", (req, res) => {
 // PUT signal by id
 server.post("/api/signals/:id", (req, res) => {
   const { id } = req.params;
-
   db("signals")
     .where({ id })
     .update({
-      /* TODO */
+      job_opening_closed: req.body.job_opening_closed,
     })
     .then(signal => {
       res.send(`Signal ${signal.id} has been successfully updated!`);
