@@ -172,7 +172,8 @@ const companies = [
   "figma.com",
   "zapier.com",
   "hubspot.com",
-  "mixpanel.com"
+  "mixpanel.com",
+  "amplitude.com"
 ];
 
 const job = new CronJob(
