@@ -55,7 +55,7 @@ const sendEventDataToSegment = companies => {
                   // PUT signal ONLY because job_opening_closed has not changed BUT last_processed_at has.
                   axios
                     .put(
-                      `http://localhost:7000/api/signals/${res[0].id}`,
+                      `https://gorgias-growth-engineer-test.herokuapp.com/api/signals/${res[0].id}`,
                       qs.stringify(data),
                       {
                         headers: {
@@ -80,7 +80,7 @@ const sendEventDataToSegment = companies => {
                   // PUT signal THEN Segment Event because job_opening_closed has changed.
                   axios
                     .put(
-                      `http://localhost:7000/api/signals/${res[0].id}`,
+                      `https://gorgias-growth-engineer-test.herokuapp.com/api/signals${res[0].id}`,
                       qs.stringify(data),
                       {
                         headers: {
@@ -121,7 +121,7 @@ const sendEventDataToSegment = companies => {
               } else {
                 axios
                   .post(
-                    "http://localhost:7000/api/signals",
+                    "https://gorgias-growth-engineer-test.herokuapp.com/api/signals/api/signals",
                     qs.stringify(data),
                     {
                       headers: {
