@@ -46,7 +46,6 @@ server.get("/api/signals/:id", (req, res) => {
 // POST signal
 server.post("/api/signals", (req, res) => {
   const signal = req.body;
-  console.log(req.body)
   db("signals")
     .insert(signal)
     .then(success => {
