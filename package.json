@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/maximesalomon/signal-growth-eng-test#readme",
   "dependencies": {
+    "analytics-node": "^3.4.0-beta.1",
     "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "knex": "^0.20.8",
     "nodemon": "^2.0.2",
