@@ -1,6 +1,6 @@
 const express = require("express");
 const db = require("./data/db");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 
 const server = express();
 const PORT = 7000;
@@ -9,10 +9,9 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 
 // API Homepage
-server
-  .get("/", (req, res) => {
-    res.send("Hello, world!");
-  })
+server.get("/", (req, res) => {
+  res.send("Hello, world!");
+});
 
 // GET all signals
 server.get("/api/signals", (req, res) => {
@@ -46,20 +45,10 @@ server.get("/api/signals/:id", (req, res) => {
 
 // POST signal
 server.post("/api/signals", (req, res) => {
-  console.log(req.body)
+  const signal = req.body;
   db("signals")
-    .insert({
-      uuid: req.body.uuid,
-      company: req.body.company,
-      title: req.body.title,
-      url: req.body.url,
-      job_opening_closed: req.body.job_opening_closed,
-      location: req.body.location,
-      first_seen_at: req.body.first_seen_at,
-      last_seen_at: req.body.last_seen_at,
-      last_processed_at: req.body.last_processed_at
-    })
-    .then(signal => {
+    .insert(signal)
+    .then(success => {
       res.send(`Signal has been successfully saved!`);
     })
     .catch(err => {
@@ -70,13 +59,18 @@ server.post("/api/signals", (req, res) => {
 // PUT signal by id
 server.put("/api/signals/:id", (req, res) => {
   const { id } = req.params;
+  const signal = req.body;
   db("signals")
     .where({ id })
-    .update({
-      job_opening_closed: req.body.job_opening_closed,
-    })
-    .then(signal => {
-      res.send(`Signal ${signal.id} has been successfully updated!`);
+    .update(signal)
+    .then(success => {
+      if (success === 1) {
+        res.send(`Signal has been successfully updated!`);
+      } else {
+        res
+          .status(404)
+          .json({ message: "Could not find signal with given id." });
+      }
     })
     .catch(err => {
       res.status(500).json({ message: "Failed to update signal!" });
@@ -87,12 +81,17 @@ server.put("/api/signals/:id", (req, res) => {
 
 server.delete("/api/signals/:id", (req, res) => {
   const { id } = req.params;
-
   db("signals")
     .where({ id })
     .del()
-    .then(signal => {
-      res.send(`Signal ${signal.id} has been successfully deleted!`);
+    .then(success => {
+      if (success === 1) {
+        res.send(`Signal has been successfully deleted!`);
+      } else {
+        res
+          .status(404)
+          .json({ message: "Could not find signal with given id." });
+      }
     })
     .catch(err => {
       res.status(500).json({ message: "Failed to delete signal!" });
