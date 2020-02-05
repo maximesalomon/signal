@@ -24,7 +24,7 @@ server.get("/api/signals", (req, res) => {
 });
 
 // GET signal by id
-server.get("api/signals/:id", (req, res) => {
+server.get("/api/signals/:id", (req, res) => {
   const { id } = req.params;
   db("signals")
     .where({ id })
@@ -44,9 +44,18 @@ server.get("api/signals/:id", (req, res) => {
 
 // POST signal
 server.post("/api/signals", (req, res) => {
-  const { signal } = req.body;
   db("signals")
-    .insert(signal)
+    .insert({
+      uuid: req.body.uuid,
+      company: req.body.company,
+      title: req.body.title,
+      url: req.body.url,
+      location: req.body.location,
+      first_seen_at: req.body.first_seen_at,
+      last_seen_at: req.body.last_seen_at,
+      last_processed_at: req.body.last_processed_at,
+      job_opening_closed: req.body.job_opening_closed,
+    })
     .then(signal => {
       res.send(`Signal ${signal.title} has been successfully saved!`);
     })
