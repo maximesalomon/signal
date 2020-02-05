@@ -60,6 +60,7 @@ server.post("/api/signals", (req, res) => {
 server.put("/api/signals/:id", (req, res) => {
   const { id } = req.params;
   const signal = req.body;
+  console.log(signal)
   db("signals")
     .where({ id })
     .update(signal)
