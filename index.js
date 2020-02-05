@@ -53,14 +53,14 @@ server.post("/api/signals", (req, res) => {
       company: req.body.company,
       title: req.body.title,
       url: req.body.url,
+      job_opening_closed: req.body.job_opening_closed,
       location: req.body.location,
       first_seen_at: req.body.first_seen_at,
       last_seen_at: req.body.last_seen_at,
-      last_processed_at: req.body.last_processed_at,
-      job_opening_closed: req.body.job_opening_closed,
+      last_processed_at: req.body.last_processed_at
     })
     .then(signal => {
-      res.send(`Signal ${signal.title} has been successfully saved!`);
+      res.send(`Signal has been successfully saved!`);
     })
     .catch(err => {
       res.status(500).json({ message: "Failed to save signal!" });
