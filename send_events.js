@@ -47,6 +47,7 @@ const sendEventDataToSegment = companies => {
             last_processed_at: signal.attributes.last_processed_at,
             job_opening_closed: signal.attributes.job_opening_closed
           };
+          console.log(data);
           db("signals")
             .where("uuid", signal.id)
             .then(res => {
