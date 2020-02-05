@@ -45,80 +45,108 @@ const sendEventDataToSegment = companies => {
             last_processed_at: signal.attributes.last_processed_at,
             job_opening_closed: signal.attributes.job_opening_closed
           };
-
           db("signals")
             .where("uuid", signal.id)
             .then(res => {
               if (res.length) {
-                if (res.job_opening_closed === signal.job_opening_closed && res.last_processed_at !== signal.last_processed_at) {
+                if (res.last_processed_at !== signal.last_processed_at) {
                   // PUT signal ONLY because job_opening_closed has not changed BUT last_processed_at has.
                   axios
-                    .put(`http://localhost:7000/api/signals/${res[0].id}`, qs.stringify(data), {
-                      headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                      },
-                      params: {
-                        id: res[0].id
+                    .put(
+                      `http://localhost:7000/api/signals/${res[0].id}`,
+                      qs.stringify(data),
+                      {
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        params: {
+                          id: res[0].id
+                        }
                       }
-                    })
+                    )
                     .then(res => {
                       console.log(
-                        "Signal updated but same job_opening_closed status"
+                        "Signal updated SINCE last_processed_at but same job_opening_closed status."
                       );
                     })
                     .catch(err => {
                       console.log(err);
                     });
-                } else {
+                } else if (
+                  res.job_opening_closed !== signal.job_opening_closed
+                ) {
                   // PUT signal THEN Segment Event because job_opening_closed has changed.
-                  //   axios
-                  //     .put(
-                  //       "http://localhost:7000/api/signals",
-                  //       qs.stringify(data),
-                  //       headers
-                  //     )
-                  //     .then(res => {
-                  //       console.log(
-                  //         "Signal updated with different job_opening_closed status."
-                  //       );
-                  //     })
-                  //     .catch(err => {
-                  //       console.log(err);
-                  //     })
-                  //     .then(res => {
-                  //       analytics.track({
-                  //         userId: "ghost@user.com",
-                  //         event: "Signal",
-                  //         properties: {
-                  //           uuid: signal.id,
-                  //           type: signal.type,
-                  //           company: signal.company,
-                  //           title: signal.title,
-                  //           url: signal.url,
-                  //           location: signal.location,
-                  //           first_seen_at: signal.first_seen_at,
-                  //           last_processed_at: signal.last_processed_at,
-                  //           last_seen_at: signallast_seen_at,
-                  //           job_opening_closed: signal.job_opening_closed
-                  //         }
-                  //       });
-                  //     });
+                  axios
+                    .put(
+                      `http://localhost:7000/api/signals/${res[0].id}`,
+                      qs.stringify(data),
+                      {
+                        headers: {
+                          "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        params: {
+                          id: res[0].id
+                        }
+                      }
+                    )
+                    .then(res => {
+                      console.log("Signal updated with different job_opening_closed status.");
+                      analytics.track({
+                        userId: `ghost@${data.company}`,
+                        event: "Signal Job Opening Closed",
+                        properties: {
+                          uuid: signal.id,
+                          type: signal.type,
+                          company: data.company,
+                          title: signal.attributes.title,
+                          url: signal.attributes.url,
+                          location: signal.attributes.location,
+                          first_seen_at: signal.attributes.first_seen_at,
+                          last_processed_at:
+                            signal.attributes.last_processed_at,
+                          last_seen_at: signal.attributes.last_seen_at,
+                          job_opening_closed:
+                            signal.attributes.job_opening_closed
+                        }
+                      });
+                    })
+                    .catch(err => {
+                      console.log(err);
+                    });
                 }
               } else {
-                console.log("NOT IN DB");
-                //     axios
-                //       .post(
-                //         "http://localhost:7000/api/signals",
-                //         qs.stringify(data),
-                //         headers
-                //       )
-                //       .then(res => {
-                //         console.log("Signal uploaded");
-                //         // Segment Event
-                //       })
-                //       .catch(err => {
-                //         console.log(err);
-                //       });
+                axios
+                  .post(
+                    "http://localhost:7000/api/signals",
+                    qs.stringify(data),
+                    {
+                      headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                      }
+                    }
+                  )
+                  .then(res => {
+                    console.log("Signal uploaded");
+                    analytics.track({
+                      userId: `ghost@${data.company}`,
+                      event: "Signal New Job Opening",
+                      properties: {
+                        uuid: signal.id,
+                        type: signal.type,
+                        company: data.company,
+                        title: signal.attributes.title,
+                        url: signal.attributes.url,
+                        location: signal.attributes.location,
+                        first_seen_at: signal.attributes.first_seen_at,
+                        last_processed_at: signal.attributes.last_processed_at,
+                        last_seen_at: signal.attributes.last_seen_at,
+                        job_opening_closed: signal.attributes.job_opening_closed
+                      }
+                    });
+                  })
+                  .catch(err => {
+                    console.log(err);
+                  });
               }
             });
         });
@@ -131,12 +159,14 @@ const sendEventDataToSegment = companies => {
 
 const companies = [
   "github.com",
-//   "trello.com",
-//   "clearbit.com",
-//   "loom.com",
-//   "segment.com",
-//   "algolia.com",
-//   "drift.com"
+  "trello.com",
+  "clearbit.com",
+  "loom.com",
+  "segment.com",
+  "algolia.com",
+  "drift.com",
+  "figma.com",
+  "zapier.com"
 ];
 
 sendEventDataToSegment(companies);
