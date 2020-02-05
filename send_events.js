@@ -170,7 +170,8 @@ const companies = [
   "algolia.com",
   "drift.com",
   "figma.com",
-  "zapier.com"
+  "zapier.com",
+  "hubspot.com"
 ];
 
 const job = new CronJob(
