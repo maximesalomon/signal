@@ -15,4 +15,8 @@ module.exports = {
     connection: process.env.DATABASE_URL,
     ssl: true
   },
+  useNullAsDefault: true,
+    migrations: {
+      directory: "./data/migrations"
+    }
 };
