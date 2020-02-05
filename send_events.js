@@ -121,7 +121,7 @@ const sendEventDataToSegment = companies => {
               } else {
                 axios
                   .post(
-                    "https://gorgias-growth-engineer-test.herokuapp.com/api/signals/api/signals",
+                    "https://gorgias-growth-engineer-test.herokuapp.com/api/signals",
                     qs.stringify(data),
                     {
                       headers: {
