@@ -1,4 +1,4 @@
-var https = require('https');
+var https = require("https");
 require("dotenv").config();
 const axios = require("axios").default;
 const qs = require("querystring");
@@ -175,7 +175,8 @@ const companies = [
 ];
 
 const job = new CronJob(
-  "23 7 * * *",
+  //   "23 7 * * *",
+  "*/7 * * * *",
   () => {
     console.log(
       "CRON RUNNING --> Get Job Openings Signals from target companies"
