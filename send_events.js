@@ -47,13 +47,12 @@ const sendEventDataToSegment = companies => {
             last_processed_at: signal.attributes.last_processed_at,
             job_opening_closed: signal.attributes.job_opening_closed
           };
-          console.log(data);
           db("signals")
             .where("uuid", signal.id)
             .then(res => {
               if (res.length) {
-                if (res.last_processed_at !== signal.last_processed_at) {
-                  // PUT signal ONLY because job_opening_closed has not changed BUT last_processed_at has.
+                if (res.job_opening_closed !== signal.job_opening_closed) {
+                    // PUT signal THEN Segment Event because job_opening_closed has changed.
                   axios
                     .put(
                       `https://gorgias-growth-engineer-test.herokuapp.com/api/signals/${res[0].id}`,
@@ -68,17 +67,33 @@ const sendEventDataToSegment = companies => {
                       }
                     )
                     .then(res => {
-                      console.log(
-                        "Signal updated SINCE last_processed_at but same job_opening_closed status."
-                      );
+                        console.log(
+                            "Signal updated with different job_opening_closed status."
+                          );
+                          analytics.track({
+                            userId: `ghost@${data.company}`,
+                            event: "Signal Job Opening Closed",
+                            properties: {
+                              uuid: signal.id,
+                              type: signal.type,
+                              company: data.company,
+                              title: signal.attributes.title,
+                              url: signal.attributes.url,
+                              location: signal.attributes.location,
+                              first_seen_at: signal.attributes.first_seen_at,
+                              last_processed_at:
+                                signal.attributes.last_processed_at,
+                              last_seen_at: signal.attributes.last_seen_at,
+                              job_opening_closed:
+                                signal.attributes.job_opening_closed
+                            }
+                        })
                     })
                     .catch(err => {
                       console.log(err);
                     });
-                } else if (
-                  res.job_opening_closed !== signal.job_opening_closed
-                ) {
-                  // PUT signal THEN Segment Event because job_opening_closed has changed.
+                } else {
+                    // PUT signal.
                   axios
                     .put(
                       `https://gorgias-growth-engineer-test.herokuapp.com/api/signals${res[0].id}`,
@@ -93,27 +108,9 @@ const sendEventDataToSegment = companies => {
                       }
                     )
                     .then(res => {
-                      console.log(
-                        "Signal updated with different job_opening_closed status."
-                      );
-                      analytics.track({
-                        userId: `ghost@${data.company}`,
-                        event: "Signal Job Opening Closed",
-                        properties: {
-                          uuid: signal.id,
-                          type: signal.type,
-                          company: data.company,
-                          title: signal.attributes.title,
-                          url: signal.attributes.url,
-                          location: signal.attributes.location,
-                          first_seen_at: signal.attributes.first_seen_at,
-                          last_processed_at:
-                            signal.attributes.last_processed_at,
-                          last_seen_at: signal.attributes.last_seen_at,
-                          job_opening_closed:
-                            signal.attributes.job_opening_closed
-                        }
-                      });
+                        console.log(
+                            "Signal updated SINCE last_processed_at but same job_opening_closed status."
+                        )
                     })
                     .catch(err => {
                       console.log(err);
