@@ -1,17 +1,17 @@
 const express = require("express");
-const db = require('./data/db');
+const db = require("./data/db");
 
 const server = express();
 const PORT = 7000;
 
-const knex = require('knex');
-const config = require('./knexfile.js');
-
+const knex = require("knex");
+const config = require("./knexfile.js");
 
 // API Homepage
-server.get("/", (req, res) => {
-  res.send("Hello, world!");
-});
+server
+  .get("/", (req, res) => {
+    res.send("Hello, world!");
+  })
 
 // GET all signals
 server.get("/api/signals", (req, res) => {
@@ -48,10 +48,20 @@ server.get("api/signals/:id", (req, res) => {
 server.post("/api/signals", (req, res) => {
   db("signals")
     .insert({
-      /* TODO */
+      uuid: req.body.uuid,
+      company: req.body.company,
+      title: req.body.title,
+      url: req.body.url,
+      location: req.body.location,
+      first_seen_at: req.body.first_seen_at,
+      last_seen_at: req.body.last_seen_at,
+      last_processed_at: req.body.last_processed_at,
+      job_opening_closed: req.body.job_opening_closed
     })
     .then(signal => {
-      res.send(`Signal ${signal.id} has been successfully saved!`);
+      res.send(`Signal ${signal.title} has been successfully saved!`);
+    }).catch(err => {
+      res.status(500).json({ message: "Failed to save signal!" });
     });
 });
 
@@ -66,6 +76,8 @@ server.post("/api/signals/:id", (req, res) => {
     })
     .then(signal => {
       res.send(`Signal ${signal.id} has been successfully updated!`);
+    }).catch(err => {
+      res.status(500).json({ message: "Failed to update signal!" });
     });
 });
 
@@ -79,6 +91,8 @@ server.delete("/api/signals/:id", (req, res) => {
     .del()
     .then(signal => {
       res.send(`Signal ${signal.id} has been successfully deleted!`);
+    }).catch(err => {
+      res.status(500).json({ message: "Failed to delete signal!" });
     });
 });
 
