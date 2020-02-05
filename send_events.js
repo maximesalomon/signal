@@ -1,7 +1,9 @@
+var https = require('https');
 require("dotenv").config();
 const axios = require("axios").default;
 const qs = require("querystring");
 const db = require("./data/db");
+const CronJob = require("cron").CronJob;
 
 var Analytics = require("analytics-node");
 var analytics = new Analytics(process.env.SEGMENT_WRITE_KEY);
@@ -90,7 +92,9 @@ const sendEventDataToSegment = companies => {
                       }
                     )
                     .then(res => {
-                      console.log("Signal updated with different job_opening_closed status.");
+                      console.log(
+                        "Signal updated with different job_opening_closed status."
+                      );
                       analytics.track({
                         userId: `ghost@${data.company}`,
                         event: "Signal Job Opening Closed",
@@ -169,4 +173,18 @@ const companies = [
   "zapier.com"
 ];
 
-sendEventDataToSegment(companies);
+const job = new CronJob(
+  "23 7 * * *",
+  () => {
+    console.log(
+      "CRON RUNNING --> Get Job Openings Signals from target companies"
+    );
+    sendEventDataToSegment(companies);
+    https.get("https://cronhub.io/ping/dc584860-4849-11ea-bafb-73b460406621");
+  },
+  null,
+  true,
+  "Europe/Paris"
+);
+
+job.start();
