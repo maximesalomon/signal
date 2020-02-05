@@ -15,10 +15,4 @@ module.exports = {
     connection: process.env.DATABASE_URL,
     ssl: true
   },
-  migrations: {
-    directory: __dirname + "./data/migrations"
-  },
-  seeds: {
-    directory: __dirname + "./data/seeds/production"
-  }
 };
