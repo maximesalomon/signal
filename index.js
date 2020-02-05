@@ -68,7 +68,7 @@ server.post("/api/signals", (req, res) => {
 });
 
 // PUT signal by id
-server.post("/api/signals/:id", (req, res) => {
+server.put("/api/signals/:id", (req, res) => {
   const { id } = req.params;
   db("signals")
     .where({ id })
