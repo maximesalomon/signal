@@ -174,19 +174,20 @@ const companies = [
   "hubspot.com"
 ];
 
-const job = new CronJob(
-  //   "23 7 * * *",
-  "*/7 * * * *",
-  () => {
-    console.log(
-      "CRON RUNNING --> Get Job Openings Signals from target companies"
-    );
-    sendEventDataToSegment(companies);
-    https.get("https://cronhub.io/ping/dc584860-4849-11ea-bafb-73b460406621");
-  },
-  null,
-  true,
-  "Europe/Paris"
-);
+sendEventDataToSegment(companies);
 
-job.start();
+// const job = new CronJob(
+//     "23 7 * * *",
+//   () => {
+//     console.log(
+//       "CRON RUNNING --> Get Job Openings Signals from target companies"
+//     );
+//     sendEventDataToSegment(companies);
+//     https.get("https://cronhub.io/ping/dc584860-4849-11ea-bafb-73b460406621");
+//   },
+//   null,
+//   true,
+//   "Europe/Paris"
+// );
+
+// job.start();
