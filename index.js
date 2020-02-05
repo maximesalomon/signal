@@ -1,11 +1,10 @@
 const express = require("express");
 const db = require("./data/db");
-const bodyParser = require('body-parser')
 
 const server = express();
 const PORT = 7000;
 
-server.use(bodyParser.json());
+server.use(express.json());
 
 // API Homepage
 server
@@ -45,22 +44,13 @@ server.get("api/signals/:id", (req, res) => {
 
 // POST signal
 server.post("/api/signals", (req, res) => {
-  console.log(req.body)
+  const { signal } = req.body;
   db("signals")
-    .insert({
-      uuid: req.body.uuid,
-      company: req.body.company,
-      title: req.body.title,
-      url: req.body.url,
-      location: req.body.location,
-      first_seen_at: req.body.first_seen_at,
-      last_seen_at: req.body.last_seen_at,
-      last_processed_at: req.body.last_processed_at,
-      job_opening_closed: req.body.job_opening_closed,
-    })
+    .insert(signal)
     .then(signal => {
       res.send(`Signal ${signal.title} has been successfully saved!`);
-    }).catch(err => {
+    })
+    .catch(err => {
       res.status(500).json({ message: "Failed to save signal!" });
     });
 });
@@ -76,7 +66,8 @@ server.post("/api/signals/:id", (req, res) => {
     })
     .then(signal => {
       res.send(`Signal ${signal.id} has been successfully updated!`);
-    }).catch(err => {
+    })
+    .catch(err => {
       res.status(500).json({ message: "Failed to update signal!" });
     });
 });
@@ -91,7 +82,8 @@ server.delete("/api/signals/:id", (req, res) => {
     .del()
     .then(signal => {
       res.send(`Signal ${signal.id} has been successfully deleted!`);
-    }).catch(err => {
+    })
+    .catch(err => {
       res.status(500).json({ message: "Failed to delete signal!" });
     });
 });
