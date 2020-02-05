@@ -1,11 +1,11 @@
 const express = require("express");
-const db = require("../data/db.js");
+const db = require('./data/db');
 
 const server = express();
 const PORT = 7000;
 
 const knex = require('knex');
-const config = require('../knexfile.js');
+const config = require('./knexfile.js');
 
 
 // API Homepage
