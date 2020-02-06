@@ -166,12 +166,17 @@ const companies = [
   "slack.com",
   "zendesk.com",
   "optimizely.com",
-  "twilio.com"
+  "twilio.com",
+  "dashlane.com",
+  "postman.com",
+  "notion.so",
+  "figma.com",
+  "spendesk.com",
+  "front.com"
 ];
 
 const job = new CronJob(
-  // "23 7 * * *",
-  "*/1 * * * *",
+  "23 7 * * *",
   () => {
     console.log(
       "CRON RUNNING --> Get Job Openings Signals from target companies"
