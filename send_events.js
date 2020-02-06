@@ -160,17 +160,6 @@ const sendEventDataToSegment = companies => {
 };
 
 const companies = [
-  "github.com",
-  "trello.com",
-  "clearbit.com",
-  "loom.com",
-  "segment.com",
-  "algolia.com",
-  "drift.com",
-  "figma.com",
-  "zapier.com",
-  "hubspot.com",
-  "mixpanel.com",
   "amplitude.com"
 ];
 
