@@ -96,7 +96,7 @@ const sendEventDataToSegment = companies => {
                   // PUT signal.
                   axios
                     .put(
-                      `https://gorgias-growth-engineer-test.herokuapp.com/api/signals${res[0].id}`,
+                      `https://gorgias-growth-engineer-test.herokuapp.com/api/signals/${res[0].id}`,
                       qs.stringify(data),
                       {
                         headers: {
