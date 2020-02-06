@@ -173,7 +173,7 @@ const companies = [
 
 const job = new CronJob(
   // "23 7 * * *",
-  "*/7 * * * *",
+  "*/1 * * * *",
   () => {
     console.log(
       "CRON RUNNING --> Get Job Openings Signals from target companies"
