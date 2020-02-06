@@ -159,7 +159,17 @@ const sendEventDataToSegment = companies => {
   });
 };
 
-const companies = ["amplitude.com"];
+const companies = [
+    "amplitude.com",
+    "loom.com",
+    "segment.com",
+    "drift.com",
+    "lambdaschool.com",
+    "gorgias.com",
+    "trello.com",
+    "front.com",
+    "superhuman.com"
+];
 
 const job = new CronJob(
   // "23 7 * * *",
