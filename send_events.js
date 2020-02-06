@@ -172,7 +172,7 @@ const companies = [
   "notion.so",
   "figma.com",
   "spendesk.com",
-  "front.com"
+  "frontapp.com"
 ];
 
 const job = new CronJob(
@@ -186,7 +186,7 @@ const job = new CronJob(
   },
   null,
   true,
-  "Europe/Paris"
+  "America/Los_Angeles"
 );
 
 job.start();
