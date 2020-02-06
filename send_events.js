@@ -28,10 +28,7 @@ const config = {
 const sendEventDataToSegment = companies => {
   companies.map(company => {
     axios
-      .get(
-        `${predictLeadsURL}${company}/job_openings`,
-        config
-      )
+      .get(`${predictLeadsURL}${company}/job_openings`, config)
       .then(res => {
         const signals = res.data.data;
         signals.map(signal => {
@@ -64,7 +61,7 @@ const sendEventDataToSegment = companies => {
                       }
                     )
                     .then(res => {
-                      console.log(
+                      res.send(
                         "Signal updated with different job_opening_closed status."
                       );
                       analytics.track({
@@ -102,7 +99,7 @@ const sendEventDataToSegment = companies => {
                       }
                     )
                     .then(res => {
-                      console.log(
+                      res.send(
                         "Signal updated SINCE last_processed_at but same job_opening_closed status."
                       );
                     })
@@ -154,15 +151,22 @@ const sendEventDataToSegment = companies => {
 };
 
 const companies = [
-    "amplitude.com",
-    "loom.com",
-    "segment.com",
-    "drift.com",
-    "lambdaschool.com",
-    "gorgias.com",
-    "trello.com",
-    "front.com",
-    "superhuman.com"
+  "amplitude.com",
+  "loom.com",
+  "segment.com",
+  "drift.com",
+  "lambdaschool.com",
+  "gorgias.com",
+  "trello.com",
+  "front.com",
+  "superhuman.com",
+  "algolia.com",
+  "intercom.com",
+  "mailchimp.com",
+  "slack.com",
+  "zendesk.com",
+  "optimizely.com",
+  "twilio.com"
 ];
 
 const job = new CronJob(
