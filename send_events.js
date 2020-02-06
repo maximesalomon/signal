@@ -55,14 +55,11 @@ const sendEventDataToSegment = companies => {
                   // PUT signal THEN Segment Event because job_opening_closed has changed.
                   axios
                     .put(
-                      `https://gorgias-growth-engineer-test.herokuapp.com/api/signals/:id`,
+                      `https://gorgias-growth-engineer-test.herokuapp.com/api/signals/${res[0].id}`,
                       qs.stringify(data),
                       {
                         headers: {
                           "Content-Type": "application/x-www-form-urlencoded"
-                        },
-                        params: {
-                          id: res[0].id
                         }
                       }
                     )
@@ -96,14 +93,11 @@ const sendEventDataToSegment = companies => {
                   // PUT signal.
                   axios
                     .put(
-                      `https://gorgias-growth-engineer-test.herokuapp.com/api/signals/:id`,
+                      `https://gorgias-growth-engineer-test.herokuapp.com/api/signals/${res[0].id}`,
                       qs.stringify(data),
                       {
                         headers: {
                           "Content-Type": "application/x-www-form-urlencoded"
-                        },
-                        params: {
-                          id: res[0].id
                         }
                       }
                     )
