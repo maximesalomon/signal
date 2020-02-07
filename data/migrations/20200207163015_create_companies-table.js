@@ -1,8 +1,8 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable("companies", tbl => {
     tbl.increments();
-    tbl.string("name", 128).notNullable();
-    tbl.string("url", 128).notNullable();
+    tbl.string("name", 128).unique().notNullable();
+    tbl.string("url", 128).unique().notNullable();
     tbl.string("location", 128);
   });
 };
