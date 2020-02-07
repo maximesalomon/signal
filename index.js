@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const server = express();
 const PORT = process.env.PORT || 7000;
 
+server.use(helmet());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 
@@ -12,6 +13,14 @@ server.use(bodyParser.urlencoded({ extended: true }));
 server.get("/", (req, res) => {
   res.send("Hello, world!");
 });
+
+// Server listening
+server.listen(PORT, () =>
+  console.log(`Server running on http://localhost:${PORT}`)
+);
+
+
+//////////   SIGNALS   //////////
 
 // GET all signals
 server.get("/api/signals", (req, res) => {
@@ -98,6 +107,5 @@ server.delete("/api/signals/:id", (req, res) => {
     });
 });
 
-server.listen(PORT, () =>
-  console.log(`Server running on http://localhost:${PORT}`)
-);
+
+//////////   COMPANIES   //////////
