@@ -1,6 +1,7 @@
 const express = require("express");
 const db = require("./data/db");
 const bodyParser = require("body-parser");
+const helmet = require('helmet')
 
 const server = express();
 const PORT = process.env.PORT || 7000;
@@ -29,7 +30,7 @@ server.get("/api/signals", (req, res) => {
       res.json(signals);
     })
     .catch(err => {
-      res.status(500).json({ message: "Failed to get signals!" });
+      res.status(500).json({ message: "Failed to get all signals!" });
     });
 });
 
@@ -109,3 +110,13 @@ server.delete("/api/signals/:id", (req, res) => {
 
 
 //////////   COMPANIES   //////////
+
+server.get("/api/companies", (req, res) => {
+  db("companies")
+    .then(companies => {
+      res.json(companies);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "Failed to get all companies!" });
+    });
+});
