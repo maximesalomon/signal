@@ -172,7 +172,12 @@ const companies = [
   "notion.so",
   "figma.com",
   "spendesk.com",
-  "frontapp.com"
+  "frontapp.com",
+  "hudl.com",
+  "hull.io",
+  "mailchim.com",
+  "basecamp.com",
+  "fast.com"
 ];
 
 const job = new CronJob(
