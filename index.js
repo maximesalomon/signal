@@ -111,6 +111,7 @@ server.delete("/api/signals/:id", (req, res) => {
 
 //////////   COMPANIES   //////////
 
+// GET all companies
 server.get("/api/companies", (req, res) => {
   db("companies")
     .then(companies => {
@@ -118,5 +119,18 @@ server.get("/api/companies", (req, res) => {
     })
     .catch(err => {
       res.status(500).json({ message: "Failed to get all companies!" });
+    });
+});
+
+// POST company
+server.post("/api/companies", (req, res) => {
+  const signal = req.body;
+  db("companies")
+    .insert(signal)
+    .then(success => {
+      res.send(`Company has been successfully saved!`);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "Failed to save company!" });
     });
 });
