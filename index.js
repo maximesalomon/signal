@@ -1,7 +1,7 @@
 const express = require("express");
 const db = require("./data/db");
 const bodyParser = require("body-parser");
-const helmet = require('helmet')
+const helmet = require("helmet");
 
 const server = express();
 const PORT = process.env.PORT || 7000;
@@ -19,7 +19,6 @@ server.get("/", (req, res) => {
 server.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
 );
-
 
 //////////   SIGNALS   //////////
 
@@ -107,7 +106,6 @@ server.delete("/api/signals/:id", (req, res) => {
       res.status(500).json({ message: "Failed to delete signal!" });
     });
 });
-
 
 //////////   COMPANIES   //////////
 
