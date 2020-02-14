@@ -9,7 +9,7 @@ module.exports = {
       directory: "./data/migrations"
     },
     seeds: {
-      directory: './data/seeds'
+      directory: "./data/seeds"
     }
   },
 
@@ -18,6 +18,6 @@ module.exports = {
     connection: process.env.DATABASE_URL,
     migrations: {
       directory: __dirname + "/data/migrations"
-    },
+    }
   }
 };
