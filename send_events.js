@@ -5,7 +5,7 @@ const qs = require("querystring");
 const db = require("./data/db");
 const CronJob = require("cron").CronJob;
 
-import { companies } from './companies';
+const companies = require('./companies');
 
 var Analytics = require("analytics-node");
 var analytics = new Analytics(process.env.SEGMENT_WRITE_KEY);
