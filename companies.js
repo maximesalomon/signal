@@ -1,4 +1,4 @@
-export const companies = [
+const companies = [
   "shopfollain.com",
   "charlottesweb.com",
   "mensuas.com",
@@ -300,3 +300,7 @@ export const companies = [
   "slendertone.com",
   "neos.co.uk"
 ];
+
+module.exports = {
+  companies
+}
