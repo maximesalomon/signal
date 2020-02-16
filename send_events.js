@@ -152,6 +152,8 @@ const sendEventDataToSegment = companies => {
   });
 };
 
+sendEventDataToSegment(companies);
+
 const job = new CronJob(
   "23 7 * * *",
   () => {
