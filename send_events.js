@@ -5,6 +5,8 @@ const qs = require("querystring");
 const db = require("./data/db");
 const CronJob = require("cron").CronJob;
 
+import { companies } from './companies';
+
 var Analytics = require("analytics-node");
 var analytics = new Analytics(process.env.SEGMENT_WRITE_KEY);
 
@@ -149,36 +151,6 @@ const sendEventDataToSegment = companies => {
       });
   });
 };
-
-const companies = [
-  "amplitude.com",
-  "loom.com",
-  "segment.com",
-  "drift.com",
-  "lambdaschool.com",
-  "gorgias.com",
-  "trello.com",
-  "front.com",
-  "superhuman.com",
-  "algolia.com",
-  "intercom.com",
-  "mailchimp.com",
-  "slack.com",
-  "zendesk.com",
-  "optimizely.com",
-  "twilio.com",
-  "dashlane.com",
-  "postman.com",
-  "notion.so",
-  "figma.com",
-  "spendesk.com",
-  "frontapp.com",
-  "hudl.com",
-  "hull.io",
-  "mailchim.com",
-  "basecamp.com",
-  "fast.com"
-];
 
 const job = new CronJob(
   "23 7 * * *",
