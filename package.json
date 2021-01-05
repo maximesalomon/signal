@@ -21,7 +21,7 @@
   "homepage": "https://github.com/maximesalomon/signal-growth-eng-test#readme",
   "dependencies": {
     "analytics-node": "^3.4.0-beta.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "cron": "^1.8.2",
     "dotenv": "^8.2.0",
